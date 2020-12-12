@@ -3,21 +3,29 @@
 function displayImage(responseJson){
     console.log(responseJson.message);
     let imageHTML =`<img src="${responseJson.message}" class="results-img">`;
-    console.log(imageHTML)
-    $('main').append(imageHTML);
+        $('.results-container').html(imageHTML);
 
 }
 
 function getImage(){
+    $('.error-message').hide();
     let breed = document.getElementById('breed').value;
     
     let url = `https://dog.ceo/api/breed/` + breed + `/images/random`;
 
     fetch(url)
-      .then(response => response.json())
+      .then(response => {
+          if (response.ok){
+              return response.json();
+          }
+            throw new Error(response.status);
+      })
       .then(responseJson => displayImage(responseJson))
-      .catch(error => alert('Something went wrong. Try again later'));
-
+      .catch(err => {
+          $('#js-err-message').text(`Something went wrong: Not a listed dog breed`);
+          $('.error-message').show();
+      });
+    
 }
 
 
