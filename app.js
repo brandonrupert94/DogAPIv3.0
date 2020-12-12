@@ -8,7 +8,9 @@ function displayImage(responseJson){
 }
 
 function getImage(){
+    let clear="";
     $('.error-message').hide();
+    $('.results-container').html(clear)
     let breed = document.getElementById('breed').value;
     
     let url = `https://dog.ceo/api/breed/` + breed + `/images/random`;
